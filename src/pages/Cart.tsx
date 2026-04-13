@@ -1,0 +1,51 @@
+import EmptyCart from "../components/EmptyCart";
+import CartSummary from "../components/CartSummary";
+import ShoppingCartItem from "../components/ShoppingCartItem";
+import { useSelector } from "react-redux";
+import type { RootState } from "../redux/store";
+// import { useState } from "react";
+import type { CartItem } from "../types/CartItem";
+
+const Cart: React.FC = () => {
+  const cartItems = useSelector((state: RootState) => state.cart.items);
+  // const [success, setSuccess] = useState("");
+
+  const handleDeleteSuccess = (msg: string) => {
+    window.alert(msg);
+
+    // setSuccess(msg);
+    // setTimeout(() => setSuccess(""), 3000);
+  };
+
+  return (
+    <div className="container mt-4">
+      <h1>Your Cart</h1>
+      <p>{cartItems.length} items in your cart</p>
+      {cartItems.length === 0 ? (
+        <EmptyCart />
+      ) : (
+        <>
+          <div className="items-in-cart mb-3">
+            <ul className="list-cart">
+              {cartItems
+                .filter((item: CartItem) => item.product)
+                .map((item: CartItem) => (
+                  <ShoppingCartItem
+                    key={item.product.id}
+                    product={item.product}
+                    quantity={item.quantity}
+                    price={Number(item.product.price)}
+                    onDeleteSuccess={handleDeleteSuccess}
+                  />
+                ))}
+            </ul>
+          </div>
+          <div className="cart-summary">
+            <CartSummary products={cartItems} />
+          </div>
+        </>
+      )}
+    </div>
+  );
+};
+export default Cart;
