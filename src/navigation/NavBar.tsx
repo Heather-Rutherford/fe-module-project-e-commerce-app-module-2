@@ -2,6 +2,7 @@
 import React from "react";
 import CartButton from "../components/CartButton";
 import HomeButton from "../components/HomeButton";
+import LoginButton from "../components/LoginButton";
 
 const NavBar: React.FC = () => {
   return (
@@ -13,6 +14,7 @@ const NavBar: React.FC = () => {
         <div className="d-flex gap-1">
           <HomeButton />
           <CartButton />
+          <LoginButton />
         </div>
       </div>
     </div>

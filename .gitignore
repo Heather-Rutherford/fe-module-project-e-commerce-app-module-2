@@ -24,3 +24,4 @@ dist-ssr
 *.sw?
 /src/extraneous
 /src/redux/example.txt
+/src/authentication/explanations.txt
