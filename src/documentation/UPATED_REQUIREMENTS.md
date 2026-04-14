@@ -1,6 +1,6 @@
 ## Objective
 
--- Implement Firebase into this E-Commerce App
+-- Implement Firebase into this E-Commerce App - done
 
 ## Instructions
 

@@ -161,6 +161,59 @@ fieldset {
 }
 
 /* ========================================
+   FORM STYLES
+   ======================================== */
+.form-container {
+  background: var(--color-bg-gray);
+  padding: var(--spacing-lg);
+  border-radius: var(--border-radius-md);
+  box-shadow: var(--shadow-default);
+  max-width: 400px;
+  margin: var(--spacing-lg) auto;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md);
+}
+
+input,
+select,
+textarea {
+  padding: var(--spacing-sm);
+  border: var(--border-default);
+  border-radius: var(--border-radius-sm);
+  font-size: 1rem;
+}
+
+/* button[type="submit"] {
+  background: var(--color-dark-gray);
+  color: var(--color-white);
+  border: none;
+  border-radius: var(--border-radius-sm);
+  padding: var(--spacing-sm) var(--spacing-lg);
+  cursor: pointer;
+  transition: background 0.2s;
+} */
+
+/* New button class for normal button styling */
+.button {
+  /* background: var(--color-dark-gray); */
+  color: var(--color-white);
+  border: none;
+  border-radius: var(--border-radius-sm);
+  padding: var(--spacing-sm) var(--spacing-lg);
+  cursor: pointer;
+  transition: background 0.2s;
+  width: 200px;
+}
+
+/* button[type="submit"]:hover {
+  background: var(--color-medium-gray);
+} */
+
+/* ========================================
    RESPONSIVE DESIGN
    ======================================== */
 @media (max-width: 768px) {

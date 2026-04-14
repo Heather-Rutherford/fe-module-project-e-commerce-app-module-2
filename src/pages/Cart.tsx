@@ -3,10 +3,19 @@ import CartSummary from "../components/CartSummary";
 import ShoppingCartItem from "../components/ShoppingCartItem";
 import { useSelector } from "react-redux";
 import type { RootState } from "../redux/store";
-// import { useState } from "react";
 import type { CartItem } from "../types/CartItem";
+import { useEffect, useState } from "react";
+import { onAuthStateChanged, type User } from "@firebase/auth";
+import { auth } from "../firebaseConfig";
+import { useNavigate } from "react-router-dom";
 
 const Cart: React.FC = () => {
+  const [user, setUser] = useState<User | null>(null);
+  const navigate = useNavigate();
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, setUser);
+    return () => unsubscribe();
+  }, []);
   const cartItems = useSelector((state: RootState) => state.cart.items);
   // const [success, setSuccess] = useState("");
 
@@ -17,7 +26,7 @@ const Cart: React.FC = () => {
     // setTimeout(() => setSuccess(""), 3000);
   };
 
-  return (
+  return user ? (
     <div className="container mt-4">
       <h1>Your Cart</h1>
       <p>{cartItems.length} items in your cart</p>
@@ -46,6 +55,11 @@ const Cart: React.FC = () => {
         </>
       )}
     </div>
+  ) : (
+    <>
+      <p>Please log in to view your cart.</p>
+      {navigate("/login", { state: { from: "cart" } })}
+    </>
   );
 };
 export default Cart;
