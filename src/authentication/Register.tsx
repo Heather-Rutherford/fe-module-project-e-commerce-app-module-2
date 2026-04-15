@@ -1,7 +1,11 @@
 // Register.tsx
 import { useState } from "react";
+// Import function to create user with email/password
 import { createUserWithEmailAndPassword } from "firebase/auth";
-import { auth } from "../firebaseConfig";
+// Import Firestore document helpers
+import { doc, setDoc } from "firebase/firestore";
+// Import Firebase auth and db instances
+import { auth, db } from "../firebaseConfig";
 
 const Register = () => {
   const [email, setEmail] = useState<string>("");
@@ -11,7 +15,19 @@ const Register = () => {
   const handleRegister = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
-      await createUserWithEmailAndPassword(auth, email, password);
+      const userCredential = await createUserWithEmailAndPassword(
+        auth,
+        email,
+        password,
+      );
+      const user = userCredential.user;
+      const userDocRef = doc(db, "users", user.uid); // <-- Place this line here
+      await setDoc(userDocRef, {
+        uid: user.uid,
+        email: user.email,
+        name: name,
+        createdAt: new Date(),
+      });
       alert("Registration successful!");
       navigation.navigate("/login");
     } catch (err: unknown) {

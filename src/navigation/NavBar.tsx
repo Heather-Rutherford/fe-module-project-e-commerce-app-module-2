@@ -3,6 +3,8 @@ import React from "react";
 import CartButton from "../components/CartButton";
 import HomeButton from "../components/HomeButton";
 import LoginButton from "../components/LoginButton";
+// NavBar component serves as the main navigation bar for the application
+import DeleteUserButton from "../components/DeleteUserButton";
 
 const NavBar: React.FC = () => {
   return (
@@ -15,6 +17,7 @@ const NavBar: React.FC = () => {
           <HomeButton />
           <CartButton />
           <LoginButton />
+          <DeleteUserButton />
         </div>
       </div>
     </div>

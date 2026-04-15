@@ -9,6 +9,7 @@ import Cart from "./pages/Cart";
 import Register from "./authentication/Register";
 import Login from "./authentication/Login";
 import Checkout from "./pages/Checkout";
+import UserProfile from "./pages/UserProfile";
 import "./App.css";
 import "./styles/styles.css";
 
@@ -33,11 +34,13 @@ function App() {
           <>
             <Route path="/cart" element={<Cart />} />
             <Route path="/checkout" element={<Checkout />} />
+            <Route path="/profile" element={<UserProfile />} />
           </>
         ) : (
           <>
             <Route path="/cart" element={<Login />} />
             <Route path="/checkout" element={<Login />} />
+            <Route path="/profile" element={<Login />} />
           </>
         )}
       </Routes>

@@ -15,12 +15,12 @@
 ### Part 2: Firebase Authentication
 
 --- Implement User Registration:
----- Allow new users to register with their email and password using Firebase Authentication.
----- Upon registration, create a corresponding user document in the users collection in Firestore.
+---- Allow new users to register with their email and password using Firebase Authentication. - done
+---- Upon registration, create a corresponding user document in the users collection in Firestore. - done
 
 --- Implement Login and Logout:
 ---- Authenticate users with Firebase Authentication (email/password).
----- Add a logout button that signs users out.
+---- Add a logout button that signs users out. - done
 
 ### Part 3: User Management
 
