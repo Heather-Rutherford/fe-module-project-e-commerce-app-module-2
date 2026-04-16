@@ -187,16 +187,6 @@ textarea {
   font-size: 1rem;
 }
 
-/* button[type="submit"] {
-  background: var(--color-dark-gray);
-  color: var(--color-white);
-  border: none;
-  border-radius: var(--border-radius-sm);
-  padding: var(--spacing-sm) var(--spacing-lg);
-  cursor: pointer;
-  transition: background 0.2s;
-} */
-
 /* New button class for normal button styling */
 .button {
   /* background: var(--color-dark-gray); */
@@ -209,9 +199,12 @@ textarea {
   width: 200px;
 }
 
-/* button[type="submit"]:hover {
-  background: var(--color-medium-gray);
-} */
+.btn-uniform {
+  min-width: 120px; /* Set your desired width */
+  padding: 4px 10px; /* Narrow vertical and horizontal padding */
+  text-align: center;
+  display: inline-block;
+}
 
 /* ========================================
    RESPONSIVE DESIGN

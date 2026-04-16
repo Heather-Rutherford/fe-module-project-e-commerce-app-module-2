@@ -17,7 +17,6 @@ const NavBar: React.FC = () => {
           <HomeButton />
           <CartButton />
           <LoginButton />
-          <DeleteUserButton />
         </div>
       </div>
     </div>

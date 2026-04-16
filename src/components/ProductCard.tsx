@@ -43,7 +43,7 @@ function ProductCard({ product }: ProductCardProps) {
         </div>
         <div className="card-footer">
           <Button
-            className="btn btn-primary float-end"
+            className="btn btn-primary w-50 float-end"
             onClick={() => handleAddToCart(product.title)}
           >
             Add to Cart

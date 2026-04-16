@@ -6,6 +6,8 @@ import { auth } from "../firebaseConfig"; // adjust path as needed
 import { deleteDoc, doc } from "firebase/firestore";
 // Import Firestore db instance
 import { db } from "../firebaseConfig"; // adjust the path as needed
+// Import Button component from react-bootstrap
+import { Button } from "react-bootstrap";
 
 // DeleteUserButton component provides a button to delete the current user's account and Firestore document
 function DeleteUserButton() {
@@ -26,7 +28,14 @@ function DeleteUserButton() {
   };
 
   // Render the delete account button
-  return <button onClick={handleDeleteAccount}>Delete Account</button>;
+  return (
+    <Button
+      onClick={handleDeleteAccount}
+      className="btn btn-danger btn-uniform"
+    >
+      Delete Account
+    </Button>
+  );
 }
 
 // Export the DeleteUserButton component

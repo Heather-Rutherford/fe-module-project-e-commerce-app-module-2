@@ -1,8 +1,10 @@
 // DisplayData.tsx
 import { useState, useEffect } from "react";
+import "../styles/UserProfile.css";
 import { db, auth } from "../firebaseConfig";
 import { doc, getDoc, updateDoc } from "firebase/firestore";
 import { onAuthStateChanged, type User } from "firebase/auth";
+import DeleteUserButton from "../components/DeleteUserButton";
 
 interface UserProfileData {
   name: string;
@@ -74,17 +76,21 @@ const UserProfile = () => {
 
   // Debug UI messages
   if (!user) {
-    return <div>No user is signed in.</div>;
+    return <div className="user-profile-message">No user is signed in.</div>;
   }
   if (!profile.name && !profile.email && !profile.address && !profile.phone) {
-    return <div>User profile is empty or not found in Firestore.</div>;
+    return (
+      <div className="user-profile-message">
+        User profile is empty or not found in Firestore.
+      </div>
+    );
   }
 
   return (
-    <div>
-      <h2>User Profile</h2>
-      <form className="user-profile">
-        <div>
+    <div className="user-profile-container">
+      <h2 className="user-profile-title">User Profile</h2>
+      <form className="user-profile-form">
+        <div className="user-profile-field">
           <label htmlFor="name">Name:</label>
           <input
             type="text"
@@ -93,11 +99,11 @@ const UserProfile = () => {
             onChange={(e) => setProfile({ ...profile, name: e.target.value })}
           />
         </div>
-        <div>
+        <div className="user-profile-field">
           <label htmlFor="email">Email:</label>
           <input type="email" id="email" value={profile.email} readOnly />
         </div>
-        <div>
+        <div className="user-profile-field">
           <label htmlFor="address">Address:</label>
           <input
             type="text"
@@ -108,7 +114,7 @@ const UserProfile = () => {
             }
           />
         </div>
-        <div>
+        <div className="user-profile-field">
           <label htmlFor="phone">Phone:</label>
           <input
             type="text"
@@ -124,6 +130,7 @@ const UserProfile = () => {
         >
           Update Profile
         </button>
+        <DeleteUserButton />
       </form>
     </div>
   );

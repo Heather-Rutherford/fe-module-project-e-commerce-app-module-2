@@ -27,10 +27,10 @@
 1. Migrate CRUD Operations to Firestore:
    --- Replace any existing CRUD operations for users with Firestore operations.
    --- Operations to implement:
-   ---- Create: Add a user document when a new user registers.
-   ---- Read: Fetch user data to display their profile.
-   ---- Update: Allow users to edit their profile information (e.g., name, address).
-   ---- Delete: Let users delete their account and remove their data from Firestore.
+   ---- Create: Add a user document when a new user registers. -- done
+   ---- Read: Fetch user data to display their profile. -- done
+   ---- Update: Allow users to edit their profile information (e.g., name, address). -- done
+   ---- Delete: Let users delete their account and remove their data from Firestore. - done
 
 ### Part 4: Product Management
 

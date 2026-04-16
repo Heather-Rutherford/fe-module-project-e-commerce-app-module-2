@@ -25,35 +25,41 @@ function LoginButton() {
 
   // If user is logged in, show Logout button
   return user ? (
-    <Button
-      className="btn btn-secondary float-end"
-      onClick={async () => {
-        try {
-          // Sign out the user
-          await signOut(auth);
-          alert("Logged out!");
-          // Redirect to home page
-          navigate("/");
-        } catch (err: unknown) {
-          // Handle logout errors
-          if (err instanceof Error) {
-            console.error("Logout error:", err.message);
-          } else {
-            console.error("An unknown error occurred during logout");
+    <>
+      <Button
+        className="btn btn-secondary btn-uniform float-end"
+        onClick={() => navigate("/profile")}
+      >
+        User Profile
+      </Button>
+      <Button
+        className="btn btn-secondary btn-uniform float-end"
+        onClick={async () => {
+          try {
+            await signOut(auth);
+            alert("Logged out!");
+            navigate("/");
+          } catch (err: unknown) {
+            if (err instanceof Error) {
+              console.error("Logout error:", err.message);
+            } else {
+              console.error("An unknown error occurred during logout");
+            }
           }
-        }
-      }}
-    >
-      Logout
-    </Button>
+        }}
+      >
+        Logout
+      </Button>
+    </>
   ) : (
-    // If user is not logged in, show Login button
-    <Button
-      className="btn btn-primary float-end"
-      onClick={() => navigate("/login")}
-    >
-      Login
-    </Button>
+    <>
+      <Button
+        className="btn btn-primary btn-uniform float-end"
+        onClick={() => navigate("/login")}
+      >
+        Login
+      </Button>
+    </>
   );
 }
 

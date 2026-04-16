@@ -1,0 +1,76 @@
+.user-profile-container {
+  max-width: 400px;
+  margin: 40px auto;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 2px 16px rgba(0, 0, 0, 0.08);
+  padding: 32px 24px;
+}
+
+.user-profile-title {
+  text-align: center;
+  margin-bottom: 24px;
+  color: #333;
+  font-size: 2rem;
+  font-weight: 600;
+}
+
+.user-profile-form {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.user-profile-field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.user-profile-field label {
+  font-weight: 500;
+  color: #555;
+}
+
+.user-profile-field input {
+  padding: 8px 12px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 1rem;
+  background: #f9f9f9;
+  transition: border 0.2s;
+}
+.user-profile-field input:focus {
+  border: 1.5px solid #007bff;
+  outline: none;
+}
+
+.btn-uniform {
+  min-width: 120px; /* Set your desired width */
+  padding: 4px 10px; /* Narrow vertical and horizontal padding */
+  text-align: center;
+  display: inline-block;
+}
+
+.btn.btn-primary {
+  background: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  padding: 10px 0;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  margin-top: 10px;
+  transition: background 0.2s;
+}
+.btn.btn-primary:hover {
+  background: #0056b3;
+}
+
+.user-profile-message {
+  text-align: center;
+  margin-top: 40px;
+  color: #888;
+  font-size: 1.1rem;
+}

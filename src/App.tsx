@@ -10,7 +10,7 @@ import Register from "./authentication/Register";
 import Login from "./authentication/Login";
 import Checkout from "./pages/Checkout";
 import UserProfile from "./pages/UserProfile";
-import "./App.css";
+import "./styles/App.css";
 import "./styles/styles.css";
 
 function App() {
