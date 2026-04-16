@@ -10,8 +10,10 @@ import Register from "./authentication/Register";
 import Login from "./authentication/Login";
 import Checkout from "./pages/Checkout";
 import UserProfile from "./pages/UserProfile";
+import ProductsDetails from "./pages/ProductsDetails";
 import "./styles/App.css";
 import "./styles/styles.css";
+import ProductListing from "./pages/ProductListing";
 
 function App() {
   const [user, setUser] = useState<User | null>(null);
@@ -35,6 +37,7 @@ function App() {
             <Route path="/cart" element={<Cart />} />
             <Route path="/checkout" element={<Checkout />} />
             <Route path="/profile" element={<UserProfile />} />
+            <Route path="/productlisting" element={<ProductListing />} />
           </>
         ) : (
           <>

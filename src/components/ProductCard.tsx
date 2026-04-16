@@ -1,4 +1,5 @@
 import { Button } from "react-bootstrap";
+import { Link } from "react-router-dom";
 import { type Product } from "../types/Product";
 import { addToCart } from "../types/cartSlice";
 import { useDispatch } from "react-redux";
@@ -41,10 +42,18 @@ function ProductCard({ product }: ProductCardProps) {
           <p className="card-text">{product.description}</p>
           <p className="card-text">${product.price}</p>
         </div>
-        <div className="card-footer">
+        <div className="card-footer d-flex">
+          <Link
+            to={`/product/${product.id}`}
+            className="btn btn-primary w-100 ms-2"
+            style={{ textAlign: "center" }}
+          >
+            Details
+          </Link>
           <Button
-            className="btn btn-primary w-50 float-end"
             onClick={() => handleAddToCart(product.title)}
+            className="btn btn-primary w-100 ms-2"
+            style={{ textAlign: "center" }}
           >
             Add to Cart
           </Button>
