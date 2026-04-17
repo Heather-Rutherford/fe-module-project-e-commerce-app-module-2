@@ -1,19 +1,35 @@
+// React and Firebase Imports
 import { useEffect, useState } from "react";
 import { onAuthStateChanged, type User } from "firebase/auth";
 import { auth } from "./firebaseConfig";
-import Navbar from "./navigation/NavBar";
 import "bootstrap/dist/css/bootstrap.min.css";
+
+// Navigation
+import Navbar from "./navigation/NavBar";
 import { Routes, Route } from "react-router-dom";
-import Home from "./pages/Home";
-import Cart from "./pages/Cart";
-import Register from "./authentication/Register";
-import Login from "./authentication/Login";
-import Checkout from "./pages/Checkout";
-import UserProfile from "./pages/UserProfile";
-import ProductsDetails from "./pages/ProductsDetails";
+
+// Styles
 import "./styles/App.css";
 import "./styles/styles.css";
+
+// Cart and Checkout
+import Home from "./pages/Home";
+import Cart from "./pages/Cart";
+import Checkout from "./pages/Checkout";
+
+// Authentication Pages
+import Register from "./authentication/Register";
+import Login from "./authentication/Login";
+
+// User Profile and Management
+import UserManagement from "./pages/UserManagement";
+import UserProfile from "./pages/UserProfile";
+
+// Admin Pages for Product Management
 import ProductListing from "./pages/ProductListing";
+import AddProduct from "./pages/AddProduct";
+import ProductsDetails from "./pages/ProductsDetails";
+import EditProduct from "./pages/EditProduct";
 
 function App() {
   const [user, setUser] = useState<User | null>(null);
@@ -37,7 +53,11 @@ function App() {
             <Route path="/cart" element={<Cart />} />
             <Route path="/checkout" element={<Checkout />} />
             <Route path="/profile" element={<UserProfile />} />
-            <Route path="/productlisting" element={<ProductListing />} />
+            <Route path="/productslisting" element={<ProductListing />} />
+            <Route path="/usermanagement" element={<UserManagement />} />
+            <Route path="/products/:id" element={<ProductsDetails />} />
+            <Route path="/addproducts" element={<AddProduct />} />
+            <Route path="/editproduct/:id" element={<EditProduct />} />
           </>
         ) : (
           <>

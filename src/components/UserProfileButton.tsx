@@ -1,3 +1,9 @@
+// Filename - UserProfileButton.tsx
+// Path - src/components/UserProfileButton.tsx
+// Description - This is the UserProfileButton Component
+// It contains the User Profile Button, Login/Logout Functionality
+// and Basic User Management Functionalities
+
 // Import React hooks for state and lifecycle management
 import { useEffect, useState } from "react";
 // Import Button component from react-bootstrap
@@ -8,7 +14,6 @@ import { useNavigate } from "react-router-dom";
 import { auth } from "../firebaseConfig";
 // Import Firebase authentication functions and User type
 import { onAuthStateChanged, signOut, type User } from "firebase/auth";
-import type UserProfile from "../pages/UserProfile";
 
 // UserProfileButton component handles login/logout UI and logic
 function UserProfileButton() {

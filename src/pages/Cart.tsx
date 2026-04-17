@@ -1,3 +1,9 @@
+// Filename - Cart.tsx
+// Path - src/pages/Cart.tsx
+// Description - This is the Cart Page Component
+// It contains the Cart Items, Cart Summary
+// and Basic Cart Functionalities
+
 import EmptyCart from "../components/EmptyCart";
 import CartSummary from "../components/CartSummary";
 import ShoppingCartItem from "../components/ShoppingCartItem";

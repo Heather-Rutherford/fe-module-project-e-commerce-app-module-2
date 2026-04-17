@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import LoadingSpinner from "../components/LoadingSpinner";
 import { formatPrice } from "../components/Formatters";
@@ -82,7 +82,7 @@ function ProductsDetails() {
         `https://fakestoreapi.com/products/${product.id}`,
         {
           method: "DELETE",
-        }
+        },
       );
 
       if (!response.ok) {

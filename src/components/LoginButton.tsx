@@ -28,9 +28,9 @@ function LoginButton() {
     <>
       <Button
         className="btn btn-secondary btn-uniform float-end"
-        onClick={() => navigate("/profile")}
+        onClick={() => navigate("/usermanagement")}
       >
-        User Profile
+        User Management
       </Button>
       <Button
         className="btn btn-secondary btn-uniform float-end"
