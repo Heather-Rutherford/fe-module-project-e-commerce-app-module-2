@@ -35,7 +35,7 @@
 ### Part 4: Product Management
 
 1. Replace FakeStore API:
-   ---- Create a products collection in Firestore to store product data.
+   ---- Create a products collection in Firestore to store product data. - done
 2. CRUD Operations for Products:
    ---- Like before, the user should be able to fetch all existing products. But now, they will be pulling from the data in Firestore
    ---- Inside the app a user should be able to Create, Update, and Delete existing products
