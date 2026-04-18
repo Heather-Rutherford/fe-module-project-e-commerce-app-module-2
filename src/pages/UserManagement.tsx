@@ -9,6 +9,8 @@ import { onAuthStateChanged, type User } from "@firebase/auth";
 import { auth } from "../firebaseConfig";
 import { Button } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
+import "../styles/styles.css";
+import "../styles/UserManagement.css";
 
 const UserManagement: React.FC = () => {
   const [user, setUser] = useState<User | null>(null);
@@ -20,52 +22,77 @@ const UserManagement: React.FC = () => {
   }, []);
 
   return user ? (
-    <div className="container mt-4">
-      <h1>User, Product, and Order Management</h1>
-      <p>Welcome, {user.email}</p>
-      <p>Use the buttons below to manage users, products, and orders.</p>
-      <h2>Management Options:</h2>
-      <h3>User Management</h3>
-      <p>View and manage your profile.</p>
-      <Button
-        variant="primary"
-        onClick={() => navigate("/profile")}
-        className="ms-2"
-      >
-        View Profile
-      </Button>
-      <h3>Product Management</h3>
-      <p>Add, edit, or delete products in your store.</p>
-      <Button
-        variant="primary"
-        onClick={() => navigate("/addproducts")}
-        className="ms-2"
-      >
-        Add Products
-      </Button>{" "}
-      <Button
-        variant="primary"
-        onClick={() => navigate("/productslisting")}
-        className="ms-2"
-      >
-        View Products (Edit/Delete Products)
-      </Button>
-      <h3>Order Management</h3>
-      <p>View and manage customer orders.</p>
-      <Button
-        variant="primary"
-        onClick={() => navigate("/neworders")}
-        className="ms-2"
-      >
-        Create Orders
-      </Button>{" "}
-      <Button
-        variant="primary"
-        onClick={() => navigate("/orderslisting")}
-        className="ms-2"
-      >
-        View Orders
-      </Button>
+    <div className="user-management-container">
+      <div className="user-management-header">
+        <h1>User, Product & Order Management</h1>
+        <p className="user-management-welcome">
+          Welcome, <span className="user-email">{user.email}</span>
+        </p>
+        <p className="user-management-desc">
+          Use the options below to manage users, products, and orders.
+        </p>
+      </div>
+      <div className="user-management-sections">
+        <div className="user-management-card">
+          <h2>User Management</h2>
+          <p>View and manage your profile.</p>
+          <Button
+            variant="primary"
+            onClick={() => navigate("/profile")}
+            className="btn-uniform"
+          >
+            View Profile
+          </Button>
+        </div>
+        <div className="user-management-card">
+          <h2>Product Management</h2>
+          <p>Add, edit, or delete products in your store.</p>
+          <div className="button-group">
+            <Button
+              variant="primary"
+              onClick={() => navigate("/addproducts")}
+              className="btn-uniform"
+            >
+              Add Products
+            </Button>{" "}
+            <Button
+              variant="primary"
+              onClick={() => navigate("/displayproducts")}
+              className="btn-uniform"
+            >
+              Display Products
+            </Button>
+            <br />
+            <Button
+              variant="primary"
+              onClick={() => navigate("/productslisting")}
+              className="btn-uniform"
+            >
+              View/Edit/Delete Products
+            </Button>
+          </div>
+        </div>
+        <div className="user-management-card">
+          <h2>Order Management</h2>
+          <p>View and manage customer orders.</p>
+          <div className="button-group">
+            <Button
+              variant="primary"
+              onClick={() => navigate("/neworders")}
+              className="btn-uniform"
+            >
+              Create Orders
+            </Button>
+            <Button
+              variant="primary"
+              onClick={() => navigate("/orderslisting")}
+              className="btn-uniform"
+            >
+              View Orders
+            </Button>
+          </div>
+        </div>
+      </div>
     </div>
   ) : (
     <p>Loading...</p>

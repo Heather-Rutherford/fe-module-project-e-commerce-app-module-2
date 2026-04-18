@@ -1,109 +1,117 @@
-// Filename - AddProduct.jsx
-// Path - src/pages/AddProduct.jsx
-// Description - This is the Add Product Page Component
-// It contains the Form, its Structure
-// and Basic Form Functionalities
+// AddDataForm.tsx
 
-import { useState, useEffect } from "react";
-import AddEditCard from "../components/AddEditCard";
-import "../styles/styles.css";
-import type { Product } from "../components/Interfaces";
+import React, { useState } from "react";
+import { db } from "../firebaseConfig";
+import { collection, addDoc } from "firebase/firestore";
+import "../styles/AddProductPretty.css";
 
-function AddProduct() {
-  const [product, setProduct] = useState<Product | null>({
+interface Product {
+  id?: string; // id is optional, as it will only be available after data is fetched
+  title: string;
+  rate: number;
+  price: number;
+  image: string;
+  description: string;
+  category: string;
+}
+
+const AddProduct = () => {
+  const [data, setData] = useState<Omit<Product, "id">>({
     title: "",
+    rate: 0,
     price: 0,
+    image: "",
     description: "",
     category: "",
-    image: "",
-    id: 0,
   });
-  const [categories, setCategories] = useState<string[]>([]);
-  const [error, setError] = useState<string>("");
-  const [success, setSuccess] = useState<string>("");
 
-  useEffect(() => {
-    const controller = new AbortController();
-    // Fetch categories from API
-    fetch("https://fakestoreapi.com/products/categories", {
-      signal: controller.signal, // Pass signal to fetch
-    })
-      .then((res) => res.json())
-      .then((data) => setCategories(data))
-      .catch((err) => {
-        if (err.name !== "AbortError") {
-          setError("Failed to load categories: " + err.message);
-        }
-      });
-
-    return () => controller.abort(); // Cleanup function
-  }, []);
-
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    setError("");
-    setSuccess("");
-
-    if (!product) return;
-
-    fetch("https://fakestoreapi.com/products", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(product),
-    })
-      .then((res) => {
-        if (!res.ok) {
-          throw new Error(`Server returned ${res.status}`);
-        }
-        return res.json();
-      })
-      .then(() => {
-        setSuccess("Product added successfully!");
-        setTimeout(() => handleReset(), 1500);
-      })
-      .catch((err) => {
-        setError(err.message);
-      });
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
+  ) => {
+    const { name, value } = e.target;
+    setData({
+      ...data,
+      [name]: name === "rate" || name === "price" ? parseFloat(value) : value,
+    });
   };
 
-  const handleReset = () => {
-    setProduct({
-      title: "",
-      price: 0,
-      description: "",
-      category: "",
-      image: "",
-      id: 0,
-    });
-    setSuccess("");
-    setError("");
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    try {
+      await addDoc(collection(db, "products"), data);
+      alert("Data added!");
+      setData({
+        title: "",
+        rate: 0,
+        price: 0,
+        image: "",
+        description: "",
+        category: "",
+      }); // reset form
+    } catch (error) {
+      console.error("Error adding document: ", error);
+    }
   };
 
   return (
-    <div className="container mt-4">
-      <h1 className="text-center mb-4">Add Product</h1>
-      {error && (
-        <div className="alert alert-danger" role="alert">
-          {error}
-        </div>
-      )}
-      {success && (
-        <div className="alert alert-success" role="alert">
-          {success}
-        </div>
-      )}
-      <AddEditCard
-        product={product}
-        setProduct={setProduct}
-        onSubmit={handleSubmit}
-        categories={categories}
-        setImageFile={null}
-        isEditMode={false}
-      />
+    <div className="add-product-container">
+      <h2 className="add-product-title">Add New Product</h2>
+      <form className="add-product-form" onSubmit={handleSubmit}>
+        <label htmlFor="image">Image URL</label>
+        <input
+          id="image"
+          name="image"
+          value={data.image}
+          onChange={handleChange}
+          placeholder="Image URL"
+        />
+        <label htmlFor="title">Title</label>
+        <input
+          id="title"
+          name="title"
+          value={data.title}
+          onChange={handleChange}
+          placeholder="Title"
+        />
+        <label htmlFor="rate">Rate</label>
+        <input
+          id="rate"
+          name="rate"
+          type="number"
+          value={data.rate}
+          onChange={handleChange}
+          placeholder="Rate"
+        />
+        <label htmlFor="price">Price</label>
+        <input
+          id="price"
+          name="price"
+          type="number"
+          value={data.price}
+          onChange={handleChange}
+          placeholder="Price"
+        />
+        <label htmlFor="description">Description</label>
+        <textarea
+          id="description"
+          name="description"
+          value={data.description}
+          onChange={handleChange}
+          placeholder="Description"
+          rows={4}
+        />
+        <label htmlFor="category">Category</label>
+        <input
+          id="category"
+          name="category"
+          value={data.category}
+          onChange={handleChange}
+          placeholder="Category"
+        />
+        <button type="submit">Add Product</button>
+      </form>
     </div>
   );
-}
-
-AddProduct.propTypes = {};
+};
 
 export default AddProduct;

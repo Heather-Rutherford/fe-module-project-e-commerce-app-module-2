@@ -21,11 +21,18 @@ function ProductCard({ product }: ProductCardProps) {
     }
   };
 
+  const baseUrl = window.location.origin + "/src"; // e.g., "https://yoursite.com"
+  const imageUrl = product.image
+    ? product.image.startsWith("http")
+      ? product.image
+      : `${baseUrl}/${product.image.replace(/^\/+/, "")}`
+    : "https://placehold.co/125";
+
   return (
     <>
       <div className="card">
         <img
-          src={product.image || "https://placehold.co/125"}
+          src={imageUrl}
           alt={product.title || "Product"}
           style={{ height: "125px", objectFit: "contain" }}
           onError={(e) => {

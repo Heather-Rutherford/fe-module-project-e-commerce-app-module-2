@@ -30,6 +30,7 @@ import ProductListing from "./pages/ProductListing";
 import AddProduct from "./pages/AddProduct";
 import ProductsDetails from "./pages/ProductsDetails";
 import EditProduct from "./pages/EditProduct";
+import DisplayProducts from "./pages/DisplayProducts";
 
 function App() {
   const [user, setUser] = useState<User | null>(null);
@@ -56,6 +57,7 @@ function App() {
             <Route path="/productslisting" element={<ProductListing />} />
             <Route path="/usermanagement" element={<UserManagement />} />
             <Route path="/products/:id" element={<ProductsDetails />} />
+            <Route path="/displayproducts" element={<DisplayProducts />} />
             <Route path="/addproducts" element={<AddProduct />} />
             <Route path="/editproduct/:id" element={<EditProduct />} />
           </>
