@@ -1,3 +1,6 @@
+// LoginButton component to handle user authentication
+// Displays login or logout button based on user's authentication state
+// Location: src/components/LoginButton.tsx
 // Import React hooks for state and lifecycle management
 import { useEffect, useState } from "react";
 // Import Button component from react-bootstrap

@@ -1,3 +1,12 @@
+// Product Card component to display individual product details
+// Fetches products from Firestore and displays them
+// using ProductCard component
+
+// Displays products in a grid layout
+// Each product is wrapped in a Bootstrap column
+// for responsiveness
+
+// Location: src/components/ProductCard.tsx
 import { Button } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { type Product } from "../types/Product";
@@ -32,7 +41,7 @@ function ProductCard({ product }: ProductCardProps) {
     <>
       <div className="card">
         <img
-          src={imageUrl}
+          src={imageUrl ? imageUrl : "https://placehold.co/125"}
           alt={product.title || "Product"}
           style={{ height: "125px", objectFit: "contain" }}
           onError={(e) => {
@@ -51,7 +60,7 @@ function ProductCard({ product }: ProductCardProps) {
         </div>
         <div className="card-footer d-flex">
           <Link
-            to={`/product/${product.id}`}
+            to={`/products/${product.id}`}
             className="btn btn-primary w-100 ms-2"
             style={{ textAlign: "center" }}
           >

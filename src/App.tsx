@@ -28,7 +28,7 @@ import UserProfile from "./pages/UserProfile";
 // Admin Pages for Product Management
 import ProductListing from "./pages/ProductListing";
 import AddProduct from "./pages/AddProduct";
-import ProductsDetails from "./pages/ProductsDetails";
+import ProductsDetails from "./pages/ProductDetails";
 import EditProduct from "./pages/EditProduct";
 import DisplayProducts from "./pages/DisplayProducts";
 

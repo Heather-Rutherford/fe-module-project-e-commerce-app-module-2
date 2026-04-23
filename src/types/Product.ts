@@ -1,11 +1,11 @@
 export interface Product {
-  id: number;
+  id?: string; // id is optional, as it will only be available after data is fetched
   title: string;
+  rate: number;
   price: number;
+  image: string;
   description: string;
   category: string;
-  image: string;
-  rate: number; // Added rate property for product rating
 }
 
 export interface ProductState {

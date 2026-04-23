@@ -57,16 +57,8 @@ const UserManagement: React.FC = () => {
             </Button>{" "}
             <Button
               variant="primary"
-              onClick={() => navigate("/displayproducts")}
-              className="btn-uniform"
-            >
-              Display Products
-            </Button>
-            <br />
-            <Button
-              variant="primary"
               onClick={() => navigate("/productslisting")}
-              className="btn-uniform"
+              className="btn-uniform w-75"
             >
               View/Edit/Delete Products
             </Button>
@@ -79,14 +71,14 @@ const UserManagement: React.FC = () => {
             <Button
               variant="primary"
               onClick={() => navigate("/neworders")}
-              className="btn-uniform"
+              className="btn-uniform w-25"
             >
               Create Orders
             </Button>
             <Button
               variant="primary"
               onClick={() => navigate("/orderslisting")}
-              className="btn-uniform"
+              className="btn-uniform w-25"
             >
               View Orders
             </Button>

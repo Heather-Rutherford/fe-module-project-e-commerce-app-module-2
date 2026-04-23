@@ -1,4 +1,8 @@
-// AddDataForm.tsx
+// Filename - AddProduct.tsx
+// Path - src/pages/AddProduct.tsx
+// Description - This is the Add Product Page Component
+// It contains the Form, its Structure
+// and Basic Form Functionalities
 
 import React, { useState } from "react";
 import { db } from "../firebaseConfig";
