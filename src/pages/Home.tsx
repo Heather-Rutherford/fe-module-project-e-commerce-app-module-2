@@ -1,10 +1,7 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import ProductCard from "../components/ProductCard";
-import { useDispatch } from "react-redux";
-import { getProductsListing } from "../redux/productSlice";
 import { useCategories } from "../hooks/useCategories";
 import "../styles/styles.css";
-import { getRandomRating } from "../utils/RandomRating";
 import type { Product } from "../types/Product";
 import {
   useProducts,
@@ -25,22 +22,6 @@ import {
 
 // Location: src/pages/Home.tsx
 const Home: React.FC = () => {
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    async function fetchProducts() {
-      const res = await fetch("https://fakestoreapi.com/products");
-      const data = await res.json();
-      // Add random rating to each product
-      const productsWithRate = data.map((product: Omit<Product, "rate">) => ({
-        ...product,
-        rate: getRandomRating(),
-      }));
-      dispatch(getProductsListing(productsWithRate));
-    }
-    fetchProducts();
-  }, [dispatch]);
-
   // Filter state for dropdowns
   type Filter = {
     category: string;

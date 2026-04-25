@@ -1,12 +1,17 @@
+import { collection, getDocs } from "firebase/firestore";
+import { db } from "../firebaseConfig";
 import { useQuery } from "@tanstack/react-query";
 
 const fetchCategories = async (): Promise<string[]> => {
-  const res = await fetch("https://fakestoreapi.com/products/categories");
-  if (!res.ok)
-    throw new Error(
-      "Unable to load categories. Please check your internet connection and try again.",
-    );
-  return res.json();
+  const querySnapshot = await getDocs(collection(db, "products"));
+  const categoriesSet = new Set<string>();
+  querySnapshot.forEach((docSnap) => {
+    const data = docSnap.data();
+    if (data.category) {
+      categoriesSet.add(data.category);
+    }
+  });
+  return Array.from(categoriesSet);
 };
 
 export function useCategories() {

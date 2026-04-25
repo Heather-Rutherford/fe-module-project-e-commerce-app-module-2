@@ -70,14 +70,7 @@ const UserManagement: React.FC = () => {
           <div className="button-group">
             <Button
               variant="primary"
-              onClick={() => navigate("/neworders")}
-              className="btn-uniform w-25"
-            >
-              Create Orders
-            </Button>
-            <Button
-              variant="primary"
-              onClick={() => navigate("/orderslisting")}
+              onClick={() => navigate("/displaycarts")}
               className="btn-uniform w-25"
             >
               View Orders

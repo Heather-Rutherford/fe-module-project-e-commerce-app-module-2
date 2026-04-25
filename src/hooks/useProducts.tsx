@@ -1,18 +1,21 @@
 import { useQuery } from "@tanstack/react-query";
 import { type Product } from "../types/Product";
-import { getRandomRating } from "../utils/RandomRating";
+// import { getRandomRating } from "../utils/RandomRating";
+import { collection, getDocs, query, where } from "firebase/firestore";
+import { db } from "../firebaseConfig";
 
 const fetchProducts = async (): Promise<Product[]> => {
-  const res = await fetch("https://fakestoreapi.com/products");
-  if (!res.ok) throw new Error("Network response was not ok");
-  const data = await res.json();
-  // Add random rating to each product
-  const productsWithRate = data.map((product: Omit<Product, "rate">) => ({
-    ...product,
-    rate: getRandomRating(),
-  }));
-  console.log("Fetched products with rate:", productsWithRate);
-  return productsWithRate;
+  const querySnapshot = await getDocs(collection(db, "products"));
+  const productsData: Product[] = [];
+  querySnapshot.forEach((docSnap) => {
+    const data = docSnap.data();
+    productsData.push({
+      ...data,
+      id: typeof data.id === "string" ? parseInt(data.id, 10) : data.id,
+      rate: typeof data.rate === "number" ? data.rate : 0,
+    } as Product);
+  });
+  return productsData;
 };
 
 export function useProducts() {
@@ -25,21 +28,25 @@ export function useProducts() {
 const fetchFilteredProductsByCategory = async (
   category: string,
 ): Promise<Product[]> => {
-  const res = await fetch(
-    `https://fakestoreapi.com/products/category/${category}`,
+  if (!category || category === "All") {
+    // If no category or 'All', return all products
+    return fetchProducts();
+  }
+  const q = query(
+    collection(db, "products"),
+    where("category", "==", category),
   );
-  if (!res.ok)
-    throw new Error(
-      "Unable to load products. Please check your internet connection and try again.",
-    );
-  const data = await res.json();
-  const filteredProductsWithRate = data.map(
-    (product: Omit<Product, "rate">) => ({
-      ...product,
-      rate: getRandomRating(),
-    }),
-  );
-  return filteredProductsWithRate;
+  const querySnapshot = await getDocs(q);
+  const productsData: Product[] = [];
+  querySnapshot.forEach((docSnap) => {
+    const data = docSnap.data();
+    productsData.push({
+      ...data,
+      id: typeof data.id === "string" ? parseInt(data.id, 10) : data.id,
+      rate: typeof data.rate === "number" ? data.rate : 0,
+    } as Product);
+  });
+  return productsData;
 };
 
 export function useFilteredProductsByCategory(category: string) {

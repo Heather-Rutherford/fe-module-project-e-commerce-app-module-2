@@ -31,6 +31,8 @@ import AddProduct from "./pages/AddProduct";
 import ProductsDetails from "./pages/ProductDetails";
 import EditProduct from "./pages/EditProduct";
 import DisplayProducts from "./pages/DisplayProducts";
+import DisplayCarts from "./pages/DisplayCarts";
+import CartDetails from "./pages/CartDetails";
 
 function App() {
   const [user, setUser] = useState<User | null>(null);
@@ -60,6 +62,8 @@ function App() {
             <Route path="/displayproducts" element={<DisplayProducts />} />
             <Route path="/addproducts" element={<AddProduct />} />
             <Route path="/editproduct/:id" element={<EditProduct />} />
+            <Route path="/displaycarts" element={<DisplayCarts />} />
+            <Route path="/cart/:id" element={<CartDetails />} />
           </>
         ) : (
           <>

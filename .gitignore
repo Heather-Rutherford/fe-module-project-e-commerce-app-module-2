@@ -30,3 +30,4 @@ dist-ssr
 /src/importFakestoreProducts.js
 /src/pages/AddProduct.txt
 /src/pages/EditProduct.txt
+/src/pages/Checkout.txt

@@ -1,18 +1,28 @@
+// Filename - Checkout.tsx
+// Path - src/pages/Checkout.tsx
+// Description - This is the Checkout Page Component
+// It contains the Form, its Structure
+// and Basic Form Functionalities
 import { Form, Button } from "react-bootstrap";
 import PageLayout from "./PageLayout";
-import "../styles/styles.css";
+import OrderSummary from "../components/OrderSummary";
+import OrderCompleted from "../components/OrderCompleted";
+
 import { useState } from "react";
 import type { RootState } from "../redux/store";
-import { useSelector } from "react-redux";
-import OrderSummary from "../components/OrderSummary";
-import { useDispatch } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import type { CartItem } from "../types/CartItem";
 import { clearCart } from "../redux/cartSlice";
-import OrderCompleted from "../components/OrderCompleted";
+import { collection, addDoc, Timestamp } from "firebase/firestore";
+import { db } from "../firebaseConfig";
+import { getAuth } from "firebase/auth";
+import "../styles/styles.css";
 
 const Checkout: React.FC = () => {
   const dispatch = useDispatch();
-  const [formError, setFormError] = useState("");
-  const cartItems = useSelector((state: RootState) => state.cart.items);
+  const cartItems: CartItem[] = useSelector(
+    (state: RootState) => state.cart.items,
+  );
   const [customerName, setCustomerName] = useState("");
   const [customerEmail, setCustomerEmail] = useState("");
   const [customerPhone, setCustomerPhone] = useState("");
@@ -22,6 +32,9 @@ const Checkout: React.FC = () => {
   const [shippingZip, setShippingZip] = useState("");
   const [shippingCountry, setShippingCountry] = useState("United States");
   const [paymentMethod, setPaymentMethod] = useState("PayPal");
+  const auth = getAuth();
+  const userId = auth.currentUser?.uid;
+  if (!userId) return;
 
   // Clear form fields after successful checkout
   const clearForm = () => {
@@ -36,43 +49,85 @@ const Checkout: React.FC = () => {
     setPaymentMethod("PayPal");
   };
 
-  // Validate form fields before checkout
+  // Improved form validation
   const validateForm = () => {
     if (!customerName.trim()) return "Please enter your name.";
+    // General email regex (RFC 5322 Official Standard)
     if (
       !customerEmail.trim() ||
-      !/^[^@\s]+@[^@\s]+\.(com|net|org|edu|gov|mil)$/i.test(customerEmail)
+      !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(customerEmail)
     )
       return "Please enter a valid email address.";
+    // International phone number support
     if (
       !customerPhone.trim() ||
-      !/^(\+1\s?)?(\([0-9]{3}\)|[0-9]{3})[-.\s]?[0-9]{3}[-.\s]?[0-9]{4}$/.test(
-        customerPhone,
-      )
+      !/^\+?\d{7,15}$/.test(customerPhone.replace(/[-.\s()]/g, ""))
     )
-      return "Please enter a valid phone number.";
+      return "Please enter a valid phone number (digits only, may start with +).";
     if (!shippingAddress.trim()) return "Please enter your shipping address.";
     if (!shippingCity.trim()) return "Please enter your city.";
     if (!shippingState.trim()) return "Please select your state.";
-    if (!shippingZip.trim()) return "Please enter your zip code.";
+    if (!shippingZip.trim()) return "Please enter your zip/postal code.";
     if (!shippingCountry.trim()) return "Please enter your country.";
     if (!paymentMethod.trim()) return "Please select a payment method.";
     return "";
   };
 
   // Place order handler
-  const handlePlaceOrder = () => {
+  const handlePlaceOrder = async () => {
     const errorMsg = validateForm();
     if (errorMsg) {
       window.alert(errorMsg);
       return;
     }
-    setFormError("");
-    dispatch(clearCart());
-    clearForm();
-    window.alert(
-      "Your payment has been processed and your cart has been cleared!",
-    );
+
+    // Build cart object
+    const cart = {
+      userId: userId, // Replace with actual user ID if available
+      createdAt: Timestamp.now(),
+      items: cartItems.map((item) => ({
+        productId: String(item.id),
+        title: item.product?.title ?? "",
+        price: item.price ?? item.product?.price ?? 0,
+        quantity: item.quantity,
+        image: item.product?.image ?? "",
+      })),
+      shippingAddress: {
+        address: shippingAddress,
+        city: shippingCity,
+        state: shippingState,
+        country: shippingCountry,
+        zip: shippingZip,
+      },
+      total: cartItems.reduce(
+        (sum: number, item) =>
+          sum + (item.price ?? item.product?.price ?? 0) * item.quantity,
+        0,
+      ),
+      status: "pending",
+      paymentInfo: {
+        method: paymentMethod,
+        transactionId: "", // Fill in if you have a transaction ID
+      },
+    };
+
+    try {
+      const docRef = await addDoc(collection(db, "carts"), cart);
+      const cartId = docRef.id;
+      await addDoc(collection(db, "linkCart2User"), {
+        userId: userId,
+        cartId: cartId,
+      });
+      dispatch(clearCart());
+      clearForm();
+      window.alert("Order placed and saved to Firestore!");
+    } catch (error: unknown) {
+      if (error instanceof Error) {
+        window.alert("Failed to place order: " + error.message);
+      } else {
+        window.alert("Failed to place order: Unknown error");
+      }
+    }
   };
 
   return (
@@ -95,11 +150,6 @@ const Checkout: React.FC = () => {
               </div>
             </div>
             <Form className="text-start position-relative">
-              {formError && (
-                <div className="alert alert-danger mb-3" role="alert">
-                  {formError}
-                </div>
-              )}
               <section className="mb-4">
                 <h2 className="h1-responsive font-weight-bold text-center my-4">
                   Customer Information
@@ -109,7 +159,9 @@ const Checkout: React.FC = () => {
                   type="text"
                   id="CustomerName"
                   value={customerName}
-                  onChange={(e) => setCustomerName(e.target.value)}
+                  onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                    setCustomerName(e.target.value)
+                  }
                   placeholder="Enter your name"
                   required
                 />
@@ -118,7 +170,9 @@ const Checkout: React.FC = () => {
                   type="email"
                   id="customerEmail"
                   value={customerEmail}
-                  onChange={(e) => setCustomerEmail(e.target.value)}
+                  onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                    setCustomerEmail(e.target.value)
+                  }
                   placeholder="Enter your email"
                   required
                 />
@@ -127,7 +181,9 @@ const Checkout: React.FC = () => {
                   type="tel"
                   id="CustomerPhone"
                   value={customerPhone}
-                  onChange={(e) => setCustomerPhone(e.target.value)}
+                  onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                    setCustomerPhone(e.target.value)
+                  }
                   placeholder="Enter your phone number"
                   required
                 />
@@ -141,7 +197,9 @@ const Checkout: React.FC = () => {
                   type="text"
                   id="shippingAddress"
                   value={shippingAddress}
-                  onChange={(e) => setShippingAddress(e.target.value)}
+                  onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                    setShippingAddress(e.target.value)
+                  }
                   placeholder="Enter your shipping address"
                   required
                 />
@@ -150,7 +208,9 @@ const Checkout: React.FC = () => {
                   type="text"
                   id="shippingCity"
                   value={shippingCity}
-                  onChange={(e) => setShippingCity(e.target.value)}
+                  onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                    setShippingCity(e.target.value)
+                  }
                   placeholder="Enter your city"
                   required
                 />
@@ -217,7 +277,6 @@ const Checkout: React.FC = () => {
                 <Form.Label htmlFor="shippingZip">Zip</Form.Label>
                 <Form.Control
                   type="text"
-                  id="shippingZip"
                   value={shippingZip}
                   onChange={(e) => setShippingZip(e.target.value)}
                   placeholder="Enter your zip code"
@@ -228,7 +287,9 @@ const Checkout: React.FC = () => {
                   type="text"
                   id="shippingCountry"
                   value={shippingCountry}
-                  onChange={(e) => setShippingCountry(e.target.value)}
+                  onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                    setShippingCountry(e.target.value)
+                  }
                   placeholder="Enter your country"
                   required
                 />

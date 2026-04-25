@@ -1,14 +1,7 @@
-export interface User {
-  id: string;
-  name?: string;
-  displayName?: string;
-  [key: string]: string | undefined; // Allow for additional properties
-}
-// Filename - CartItems.tsx
-// Path - src/types/CartItem.ts
-// Description - This file contains the CartItem type definitions
-// and related functions for managing cart items.
-import type { Product } from "./Product";
+// Filename - Carts.tsx
+// Path - src/types/Carts.ts
+// Description - This file contains the Cart type definitions
+// and related functions for managing carts.
 import { db } from "../firebaseConfig";
 import {
   collection,
@@ -18,18 +11,7 @@ import {
   doc,
   getDoc,
 } from "firebase/firestore";
-import "../styles/AddProductPretty.css";
-
-export interface CartItem {
-  id: string;
-  product: Product;
-  quantity: number;
-  price?: number;
-}
-
-export interface CartItemState {
-  items: CartItem[];
-}
+import { type CartType } from "../types/CartType";
 
 // linkingCollection: the name of the linking table (e.g., "userCarts")
 // cartsCollection: the name of the carts collection (e.g., "carts")
@@ -53,16 +35,11 @@ export async function getCartsByUserId(
   });
 
   // Filter out any nulls (in case a cartId doesn't exist)
-  const carts = (await Promise.all(cartPromises)).filter(Boolean);
+  const carts = (await Promise.all(cartPromises)).filter(Boolean) as CartType[];
   return carts;
 }
 
-export async function getUserInfoByUserId(
-  userId: string,
-  usersCollection = "users",
-) {
-  const userDoc = await getDoc(doc(db, usersCollection, userId));
-  return userDoc.exists()
-    ? ({ id: userDoc.id, ...userDoc.data() } as User)
-    : null;
+export async function getCartById(cartId: string, cartsCollection = "carts") {
+  const cartDoc = await getDoc(doc(db, cartsCollection, cartId));
+  return cartDoc.exists() ? { id: cartDoc.id, ...cartDoc.data() } : null;
 }

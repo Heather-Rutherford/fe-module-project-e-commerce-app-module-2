@@ -1,5 +1,5 @@
 export interface Product {
-  id?: string; // id is optional, as it will only be available after data is fetched
+  id: string; // id is now required and always a string
   title: string;
   rate: number;
   price: number;

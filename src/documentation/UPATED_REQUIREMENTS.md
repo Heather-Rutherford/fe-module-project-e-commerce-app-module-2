@@ -43,10 +43,10 @@
 ### Part 5: Order Management
 
 1. Create Orders:
-   --- When users place their orders in their cart, store that order in Firebase. The order should include all products in the order as well as the user who placed the order
+   --- When users place their orders in their cart, store that order in Firebase. The order should include all products in the order as well as the user who placed the order. - done
 
 2. Order History:
-   --- Allow users to access a list of their previous carts, serving as a history of their orders.
-   --- Fetch the list of user orders from the backend API endpoint.
-   --- Display each cart entry with details such as the cart ID, date of creation, and the total price of the order.
-   --- Enable users to click on individual orders to view the full details, including the list of products and the total price of the order.
+   --- Allow users to access a list of their previous carts, serving as a history of their orders. - done
+   --- Fetch the list of user orders from the backend API endpoint. - done
+   --- Display each cart entry with details such as the cart ID, date of creation, and the total price of the order. - done
+   --- Enable users to click on individual orders to view the full details, including the list of products and the total price of the order. - done

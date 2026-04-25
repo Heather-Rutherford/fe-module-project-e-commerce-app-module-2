@@ -15,7 +15,7 @@ const NavBar: React.FC = () => {
         <h2 className="h1-responsive font-weight-bold mb-0">
           Advanced E-Commerce App
         </h2>
-        <div className="d-flex gap-1">
+        <div className="d-flex gap-1 mb-3">
           <HomeButton />
           <CartButton />
           <LoginButton />
