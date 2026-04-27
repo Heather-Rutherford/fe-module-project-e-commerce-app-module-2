@@ -1,0 +1,93 @@
+/* User Management Page Styles */
+.user-management-container {
+  max-width: 900px;
+  margin: 40px auto;
+  background: #fff;
+  border-radius: 18px;
+  box-shadow: 0 4px 32px rgba(0, 0, 0, 0.1);
+  padding: 36px 32px 32px 32px;
+}
+
+.user-management-header {
+  text-align: center;
+  margin-bottom: 36px;
+}
+
+.user-management-header h1 {
+  font-size: 2.2rem;
+  font-weight: 700;
+  color: #222;
+  margin-bottom: 10px;
+}
+
+.user-management-welcome {
+  font-size: 1.1rem;
+  color: #555;
+}
+.user-email {
+  font-weight: 600;
+  color: #007bff;
+}
+.user-management-desc {
+  color: #888;
+  margin-bottom: 0;
+}
+
+.user-management-sections {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 32px;
+  justify-content: space-between;
+}
+
+.user-management-card {
+  flex: 1 1 260px;
+  min-width: 260px;
+  background: #f8f9fa;
+  border-radius: 14px;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.04);
+  padding: 28px 20px 24px 20px;
+  margin-bottom: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  transition: box-shadow 0.2s;
+}
+.user-management-card:hover {
+  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.1);
+}
+.user-management-card h2 {
+  font-size: 1.3rem;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 8px;
+}
+.user-management-card p {
+  color: #666;
+  margin-bottom: 18px;
+  text-align: center;
+}
+.button-group {
+  display: flex;
+  gap: 14px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+.btn-uniform {
+  min-width: 120px;
+  padding: 8px 0;
+  font-size: 1rem;
+  border-radius: 6px;
+  font-weight: 500;
+  margin-bottom: 0;
+}
+@media (max-width: 900px) {
+  .user-management-sections {
+    flex-direction: column;
+    gap: 24px;
+  }
+  .user-management-card {
+    width: 100%;
+    margin-bottom: 0;
+  }
+}

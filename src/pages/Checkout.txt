@@ -1,0 +1,48 @@
+import { collection, addDoc, Timestamp } from "firebase/firestore";
+import { db } from "../firebaseConfig";
+// ...existing imports...
+
+const handlePlaceOrder = async () => {
+  const errorMsg = validateForm();
+  if (errorMsg) {
+    window.alert(errorMsg);
+    return;
+  }
+  setFormError("");
+
+  // Build order object
+  const order = {
+    userId: "guest", // Replace with actual user ID if available
+    createdAt: Timestamp.now(),
+    items: cartItems.map(item => ({
+      productId: item.id,
+      title: item.title,
+      price: item.price,
+      quantity: item.quantity,
+      image: item.image,
+    })),
+    shippingAddress: {
+      address: shippingAddress,
+      city: shippingCity,
+      state: shippingState,
+      country: shippingCountry,
+      zip: shippingZip,
+    },
+    total: cartItems.reduce((sum, item) => sum + item.price * item.quantity, 0),
+    status: "pending",
+    paymentInfo: {
+      method: paymentMethod,
+      transactionId: "", // Fill in if you have a transaction ID
+    },
+    // Add other fields as needed
+  };
+
+  try {
+    await addDoc(collection(db, "orders"), order);
+    dispatch(clearCart());
+    clearForm();
+    window.alert("Order placed and saved to Firestore!");
+  } catch (error) {
+    window.alert("Failed to place order: " + error.message);
+  }
+};

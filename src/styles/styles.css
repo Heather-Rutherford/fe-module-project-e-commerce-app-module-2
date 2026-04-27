@@ -1,0 +1,233 @@
+/* Filename - Styles.css */
+/* Global styles for forms, pages, and components */
+
+/* ========================================
+   CSS CUSTOM PROPERTIES (VARIABLES)
+   ======================================== */
+:root {
+  --color-white: #fff;
+  --color-light-gray: #ddd;
+  --color-medium-gray: #888;
+  --color-dark-gray: #333;
+  --color-bg-gray: #f0f0f0;
+
+  --spacing-xs: 4px;
+  --spacing-sm: 8px;
+  --spacing-md: 10px;
+  --spacing-lg: 20px;
+  --spacing-xl: 25px;
+
+  --border-radius-sm: 4px;
+  --border-radius-md: 15px;
+
+  --shadow-default: 0 0 20px rgba(0, 0, 0, 0.2);
+  --border-default: 1px solid var(--color-light-gray);
+}
+
+/* ========================================
+   GLOBAL STYLES
+   ======================================== */
+.App {
+  background-color: var(--color-white);
+  border-radius: var(--border-radius-md);
+  box-shadow: var(--shadow-default);
+  padding: var(--spacing-md) var(--spacing-lg);
+  transition: transform 0.2s;
+  max-width: 500px;
+  width: 100%;
+  text-align: center;
+  margin: var(--spacing-lg) auto;
+}
+
+fieldset {
+  border: none;
+}
+
+/* ========================================
+   NAVIGATION
+   ======================================== */
+.navbar-brand {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: var(--color-light-gray);
+}
+
+/* ========================================
+   BUTTONS & CONTROLS
+   ======================================== */
+.button-group {
+  display: flex;
+  justify-content: flex-start;
+  gap: var(--spacing-md);
+}
+
+.quantity-control {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-md);
+}
+
+.cart-item {
+  /* Individual cart item styling */
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: var(--spacing-md);
+  padding: var(--spacing-md);
+  border-bottom: var(--border-default);
+}
+
+.cart-item-buttons {
+  /* Button container within cart items */
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-md);
+  flex-wrap: wrap;
+  margin-right: var(--spacing-lg);
+}
+
+.cart-item-price {
+  display: flex;
+  align-items: flex-end;
+  flex-direction: column;
+  margin-top: var(--spacing-lg);
+  margin-right: var(--spacing-xl);
+}
+
+.cart-summary {
+  /* Cart summary section styling */
+  text-align: right;
+  margin-top: var(--spacing-lg);
+  margin-right: var(--spacing-xl);
+  font-weight: bold;
+}
+
+.empty-cart {
+  /* Styling for empty cart message */
+  text-align: center;
+  color: var(--color-medium-gray);
+  font-style: italic;
+  margin-top: var(--spacing-lg);
+}
+
+.order-item {
+  /* Individual order item styling */
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-md);
+  padding: var(--spacing-md);
+  border-bottom: var(--border-default);
+}
+
+.order-summary {
+  /* Order summary section styling */
+  text-align: left;
+  margin-top: var(--spacing-lg);
+  margin-right: var(--spacing-xl);
+}
+
+.total-items-section {
+  margin-top: 20px; /* Adjust value as needed */
+}
+/* ======
+==================================
+   FORM STYLES
+   ======================================== */
+.label {
+  font-weight: bold;
+  color: var(--color-dark-gray);
+}
+
+/* ========================================
+   PRODUCT STYLES
+   ======================================== */
+.product-title {
+  text-align: left;
+  font-weight: bold;
+  flex: 1;
+  margin: 0;
+}
+
+.product-detail-image {
+  height: 300px;
+  object-fit: contain;
+  max-width: 100%;
+}
+
+.product-img {
+  width: 200px; /* set desired width */
+  height: 200px; /* set desired height */
+  object-fit: cover; /* keeps aspect ratio and fills the box */
+}
+
+/* ========================================
+   FORM STYLES
+   ======================================== */
+.form-container {
+  background: var(--color-bg-gray);
+  padding: var(--spacing-lg);
+  border-radius: var(--border-radius-md);
+  box-shadow: var(--shadow-default);
+  max-width: 400px;
+  margin: var(--spacing-lg) auto;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md);
+}
+
+input,
+select,
+textarea {
+  padding: var(--spacing-sm);
+  border: var(--border-default);
+  border-radius: var(--border-radius-sm);
+  font-size: 1rem;
+}
+
+/* New button class for normal button styling */
+.button {
+  /* background: var(--color-dark-gray); */
+  color: var(--color-white);
+  border: none;
+  border-radius: var(--border-radius-sm);
+  padding: var(--spacing-sm) var(--spacing-lg);
+  cursor: pointer;
+  transition: background 0.2s;
+  width: 200px;
+}
+
+.btn-uniform {
+  min-width: 120px; /* Set your desired width */
+  padding: 4px 10px; /* Narrow vertical and horizontal padding */
+  text-align: center;
+  display: inline-block;
+}
+
+/* ========================================
+   RESPONSIVE DESIGN
+   ======================================== */
+@media (max-width: 768px) {
+  .App {
+    max-width: 100%;
+    margin: var(--spacing-md);
+    padding: var(--spacing-sm) var(--spacing-md);
+  }
+
+  .button-group {
+    flex-direction: column;
+    gap: var(--spacing-sm);
+  }
+
+  .cart-item {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--spacing-sm);
+  }
+
+  .cart-item-price {
+    margin-right: 0;
+  }
+}

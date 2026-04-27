@@ -1,0 +1,96 @@
+import { useEffect, useState } from "react";
+import { onAuthStateChanged, type User } from "firebase/auth";
+import { auth } from "./firebaseConfig";
+// import { Routes, Route } from "react-router-dom";
+// import Home from "./pages/Home";
+// import Cart from "./pages/Cart";
+import Navbar from "./navigation/NavBar";
+import "bootstrap/dist/css/bootstrap.min.css";
+// import Checkout from "./pages/Checkout";
+// import Register from "./authentication/Register";
+// import Login from "./authentication/Login";
+
+test whether the user is logged in or not
+
+Read LoginButton.tsx
+
+To test whether the user is logged in or not, you need to check the authentication state from Firebase. You can do this by using the onAuthStateChanged listener or by passing the user state as a prop/context.
+
+Here’s a simple way to update your LoginButton component to show "Login" if the user is not logged in, and "Logout" if the user is logged in:
+
+Import auth and onAuthStateChanged.
+Use useEffect and useState to track the user.
+Example:
+
+This will display the appropriate button based on the user's authentication state. Add your logout logic where indicated.
+
+import { useEffect, useState } from "react";
+import { Button } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
+import { auth } from "../firebaseConfig";
+import { onAuthStateChanged, User } from "firebase/auth";
+
+function LoginButton() {
+  const [user, setUser] = useState<User | null>(null);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, setUser);
+    return () => unsubscribe();
+  }, []);
+
+  return user ? (
+    <Button className="btn btn-secondary float-end" onClick={() => {/* handle logout here */}}>
+      Logout
+    </Button>
+  ) : (
+    <Button className="btn btn-primary float-end" onClick={() => navigate("/login")}>
+      Login
+    </Button>
+  );
+}
+
+export default LoginButton;
+
+
+Here’s a Node.js script to fetch products from fakestoreapi and upload them to your Firestore collection:
+
+Install dependencies in your project root:
+
+npm install firebase node-fetch
+
+Save this script as importFakestoreProducts.js in your project root:
+const fetch = require('node-fetch');
+const { initializeApp, applicationDefault } = require('firebase-admin/app');
+const { getFirestore } = require('firebase-admin/firestore');
+const admin = require('firebase-admin');
+
+// Initialize Firebase Admin SDK
+admin.initializeApp({
+  credential: admin.credential.applicationDefault(),
+});
+const db = getFirestore();
+
+async function importProducts() {
+  const res = await fetch('https://fakestoreapi.com/products');
+  const products = await res.json();
+
+  const batch = db.batch();
+  products.forEach((product) => {
+    const docRef = db.collection('products').doc(product.id.toString());
+    batch.set(docRef, product);
+  });
+
+  await batch.commit();
+  console.log('Products imported!');
+}
+
+importProducts().catch(console.error);
+
+Make sure you have a Firebase service account key or are running this in an environment with Firebase Admin access.
+
+Run the script:
+
+node importFakestoreProducts.js
+
+This will create a products collection in Firestore with documents matching the fakestoreapi structure. Let me know if you need help with any step!
